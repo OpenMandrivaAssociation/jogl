@@ -61,18 +61,18 @@ export OPT_JAR_LIST="antlr ant/antlr"
 export CLASSPATH=$(build-classpath antlr ant/ant-antlr)
 
 pushd make
-
 perl -pi -e 's@/usr/X11R6/%{_lib}@%{_libdir}@g' build.xml
 
 %ant \
     -Duser.home=%{_topdir}/SOURCES \
     -Dantlr.jar=$(build-classpath antlr) \
+    all \
     javadoc.dev.x11
 
 popd
 
 %install
-[ -d %{buildroot} -a "%{buildroot}" != "" ] && %__rm -rf %{buildroot}
+rm -rf %{buildroot}
 
 # jars
 %__install -dm 755 %{buildroot}%{_javadir}
@@ -91,12 +91,12 @@ popd
 
 # javadoc
 %__install -dm 755 %{buildroot}%{_javadocdir}/%{name}-%{version}
-%__cp -pr javadoc_public/* \
+%__cp -pr javadoc_jogl_dev/* \
 	%{buildroot}%{_javadocdir}/%{name}-%{version}
 ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name} # ghost symlink
 
 %clean
-[ -d %{buildroot} -a "%{buildroot}" != "" ] && %__rm -rf %{buildroot}
+rm -rf %{buildroot}
  
 %post javadoc
 %__rm -f %{_javadocdir}/%{name}
@@ -105,9 +105,8 @@ ln -s %{name}-%{version} %{_javadocdir}/%{name}
 %files
 %defattr(644,root,root,755)
 %{_javadir}/*.jar
-%{_libdir}/libjogl.so
-#%{_libdir}/libjogl_awt.so
-#%{_libdir}/libjogl_drihack.so
+%attr(755,root,root) %{_libdir}/libjogl.so
+%attr(755,root,root) %{_libdir}/libjogl_awt.so
 
 %files javadoc
 %defattr(-,root,root)
