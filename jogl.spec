@@ -17,6 +17,7 @@ BuildRequires:	java-rpmbuild
 BuildRequires:	unzip
 BuildRequires:	update-alternatives
 BuildRequires:	xml-commons-apis
+BuildRequires:	cpptasks
 Requires:	java >= 1.5
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
@@ -50,7 +51,7 @@ Usermanual for jogl.
 %prep
 %setup -q -n %{name}
 pushd make
-%patch0 -0
+%patch0 -p0
 popd
 
 %__cp %{SOURCE1} make
@@ -61,16 +62,18 @@ export CLASSPATH=$(build-classpath antlr ant/ant-antlr)
 
 pushd make
 
-perl -p -i -e 's@/usr/X11R6/%{_lib}@%{_libdir}@g' build.xml
+perl -pi -e 's@/usr/X11R6/%{_lib}@%{_libdir}@g' build.xml
 
 %ant \
-    -Djogl.cg="0" \
     -Duser.home=%{_topdir}/SOURCES \
-    -Dantlr.jar=$(build-classpath antlr)
+    -Dantlr.jar=$(build-classpath antlr) \
+    javadoc.dev.x11
 
 popd
 
 %install
+[ -d %{buildroot} -a "%{buildroot}" != "" ] && %__rm -rf %{buildroot}
+
 # jars
 %__install -dm 755 %{buildroot}%{_javadir}
 %__install -m 644 build/%{name}.jar \
