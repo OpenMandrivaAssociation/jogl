@@ -1,7 +1,7 @@
 Summary:	Java bindings for the OpenGL API
 Name:		jogl
 Version:	1.1.1
-Release:	%mkrel 0.6.7
+Release:	%mkrel 0.6.8
 Group:		Development/Java
 License:	BSD
 URL:		http://jogl.dev.java.net/
