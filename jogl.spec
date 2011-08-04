@@ -10,6 +10,7 @@ Source0:	%{name}-%{version}.tar.bz2
 # match gluegen package
 # svn co https://svn.java.net/svn/gluegen~svn/branches/1.0b06-maint gluegen-1.0b06
 Source1:	gluegen-1.0b06.tar.bz2
+Source2:	jogl.properties
 Patch0:		%{name}-1.1.1-src-no-link-against-sun-java.patch
 BuildRequires:	ant
 BuildRequires:	ant-antlr
@@ -58,7 +59,7 @@ pushd make
 %patch0 -p0
 popd
 
-%__cp %{SOURCE1} make
+%__cp %{SOURCE2} make
 
 %build
 export OPT_JAR_LIST="antlr ant/antlr"
