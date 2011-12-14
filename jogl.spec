@@ -1,7 +1,7 @@
 Summary:	Java bindings for the OpenGL API
 Name:		jogl
 Version:	1.1.1
-Release:	%mkrel 0.6.9
+Release:	%mkrel 0.6.10
 Group:		Development/Java
 License:	BSD
 URL:		http://jogl.dev.java.net/
@@ -12,6 +12,8 @@ Source0:	%{name}-%{version}.tar.bz2
 Source1:	gluegen-1.0b06.tar.bz2
 Source2:	jogl.properties
 Patch0:		%{name}-1.1.1-src-no-link-against-sun-java.patch
+# http://pkgs.fedoraproject.org/gitweb/?p=gluegen.git;a=blob;f=fix-antlr-classpath.patch
+Patch1:		fix-antlr-classpath.patch
 BuildRequires:	ant
 BuildRequires:	ant-antlr
 BuildRequires:	antlr
@@ -57,6 +59,9 @@ Usermanual for jogl.
 ln -sf gluegen-1.0b06 ../gluegen
 pushd make
 %patch0 -p0
+popd
+pushd ../gluegen-1.0b06
+%patch1 -p1
 popd
 
 %__cp %{SOURCE2} make
