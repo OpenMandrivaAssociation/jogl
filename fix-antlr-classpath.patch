@@ -1,0 +1,28 @@
+--- gluegen-1.0b06/make/build.xml~	2011-08-03 17:34:45.000000000 -0300
++++ gluegen-1.0b06/make/build.xml	2011-12-14 17:02:12.330295247 -0200
+@@ -14,6 +14,12 @@
+    <available property="antlr.jar" file="/usr/share/java/antlr.jar"
+               value="/usr/share/java/antlr.jar"/>
+ 
++    <!-- Create the classpath for ANTLR.  This requires the user-defined
++      - "antlr.jar" property. -->
++    <path id="antlr.classpath">
++      <pathelement location="${antlr.jar}" />
++    </path>
++
+   <target name="load.user.properties" unless="user.properties.file">
+     <!-- Load the user specified properties file that defines various host
+       - specific paths.  The user will be notified if this is does not
+@@ -71,12 +77,6 @@
+     <!-- Set up compilation for either Java SE or Java ME / CDC / FP. -->
+     <antcall target="setup.javase"        inheritRefs="true" />
+     <antcall target="setup.javame.cdc.fp" inheritRefs="true" />
+-
+-    <!-- Create the classpath for ANTLR.  This requires the user-defined
+-      - "antlr.jar" property. -->
+-    <path id="antlr.classpath">
+-      <pathelement location="${antlr.jar}" />
+-    </path>
+     
+     <!-- The location of the GlueGen source and the C grammar files. -->
+     <property name="gluegen" value="${src.java}/com/sun/gluegen" />
