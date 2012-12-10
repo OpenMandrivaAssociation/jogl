@@ -1,7 +1,7 @@
 Summary:	Java bindings for the OpenGL API
 Name:		jogl
 Version:	1.1.1
-Release:	%mkrel 0.6.10
+Release:	0.6.10
 Group:		Development/Java
 License:	BSD
 URL:		http://jogl.dev.java.net/
@@ -24,8 +24,8 @@ BuildRequires:	unzip
 BuildRequires:	update-alternatives
 BuildRequires:	xml-commons-apis
 BuildRequires:	cpptasks
+BuildRequires:	pkgconfig(xt)
 Requires:	java >= 1.5
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description 
 The JOGL Project hosts a reference implementation of the Java bindings for
@@ -101,13 +101,10 @@ popd
 
 # javadoc
 %__install -dm 755 %{buildroot}%{_javadocdir}/%{name}-%{version}
-%__cp -pr javadoc_jogl_dev/* \
+cp -pr javadoc_jogl_dev/* \
 	%{buildroot}%{_javadocdir}/%{name}-%{version}
 ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name} # ghost symlink
 
-%clean
-rm -rf %{buildroot}
- 
 %post javadoc
 %__rm -f %{_javadocdir}/%{name}
 ln -s %{name}-%{version} %{_javadocdir}/%{name}
@@ -126,3 +123,37 @@ ln -s %{name}-%{version} %{_javadocdir}/%{name}
 %files manual
 %defattr(-,root,root)
 %doc doc/*
+
+
+%changelog
+* Wed Dec 14 2011 Paulo Andrade <pcpa@mandriva.com.br> 1.1.1-0.6.10mdv2012.0
++ Revision: 741343
+- Correct build in current Mandriva cooker.
+
+* Thu Aug 04 2011 Paulo Andrade <pcpa@mandriva.com.br> 1.1.1-0.6.9
++ Revision: 693127
+- Rebuild from checkout of maintenance branch.
+
+* Mon Dec 06 2010 Oden Eriksson <oeriksson@mandriva.com> 1.1.1-0.6.8mdv2011.0
++ Revision: 612509
+- the mass rebuild of 2010.1 packages
+
+* Thu Apr 29 2010 Tomasz Pawel Gajc <tpg@mandriva.org> 1.1.1-0.6.7mdv2010.1
++ Revision: 540949
+- rebuild
+
+* Wed Sep 16 2009 Tomasz Pawel Gajc <tpg@mandriva.org> 1.1.1-0.6.6mdv2010.0
++ Revision: 443343
+- rebuild
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - rebuild
+
+* Sat Nov 08 2008 Tomasz Pawel Gajc <tpg@mandriva.org> 1.1.1-0.6.4mdv2009.1
++ Revision: 301148
+- finally make it work
+- add buildrequires on cpptasks
+- don't build Cg support
+- add source and spec files
+- Created package structure for jogl.
+
