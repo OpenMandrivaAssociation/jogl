@@ -70,7 +70,7 @@ popd
 export OPT_JAR_LIST="antlr ant/antlr"
 export CLASSPATH=$(build-classpath antlr ant/ant-antlr)
 
-find . -name ".svn" -type d -exec rm -rf {} \;
+rm -rf doc/jogl-manual/*/.svn
 
 pushd make
 perl -pi -e 's@/usr/X11R6/%{_lib}@%{_libdir}@g' build.xml
