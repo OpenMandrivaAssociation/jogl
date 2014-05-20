@@ -1,3 +1,5 @@
+%define debug_package %{nil}
+
 Summary:	Java bindings for the OpenGL API
 Name:		jogl
 Version:	1.1.1
