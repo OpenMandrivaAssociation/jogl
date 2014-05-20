@@ -1,7 +1,9 @@
+%define debug_package %{nil}
+
 Summary:	Java bindings for the OpenGL API
 Name:		jogl
 Version:	1.1.1
-Release:	0.6.10
+Release:	0.6.11
 Group:		Development/Java
 License:	BSD
 URL:		http://jogl.dev.java.net/
@@ -70,6 +72,8 @@ popd
 export OPT_JAR_LIST="antlr ant/antlr"
 export CLASSPATH=$(build-classpath antlr ant/ant-antlr)
 
+rm -rf doc/jogl-manual/*/.svn
+
 pushd make
 perl -pi -e 's@/usr/X11R6/%{_lib}@%{_libdir}@g' build.xml
 
@@ -82,7 +86,6 @@ perl -pi -e 's@/usr/X11R6/%{_lib}@%{_libdir}@g' build.xml
 popd
 
 %install
-rm -rf %{buildroot}
 
 # jars
 %__install -dm 755 %{buildroot}%{_javadir}
@@ -110,50 +113,15 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name} # ghost symlink
 ln -s %{name}-%{version} %{_javadocdir}/%{name}
 
 %files
-%defattr(644,root,root,755)
 %{_javadir}/*.jar
 %attr(755,root,root) %{_libdir}/libjogl.so
 %attr(755,root,root) %{_libdir}/libjogl_awt.so
 
 %files javadoc
-%defattr(-,root,root)
 %doc %{_javadocdir}/%{name}-%{version}
 %ghost %doc %{_javadocdir}/%{name}
 
 %files manual
-%defattr(-,root,root)
 %doc doc/*
 
-
-%changelog
-* Wed Dec 14 2011 Paulo Andrade <pcpa@mandriva.com.br> 1.1.1-0.6.10mdv2012.0
-+ Revision: 741343
-- Correct build in current Mandriva cooker.
-
-* Thu Aug 04 2011 Paulo Andrade <pcpa@mandriva.com.br> 1.1.1-0.6.9
-+ Revision: 693127
-- Rebuild from checkout of maintenance branch.
-
-* Mon Dec 06 2010 Oden Eriksson <oeriksson@mandriva.com> 1.1.1-0.6.8mdv2011.0
-+ Revision: 612509
-- the mass rebuild of 2010.1 packages
-
-* Thu Apr 29 2010 Tomasz Pawel Gajc <tpg@mandriva.org> 1.1.1-0.6.7mdv2010.1
-+ Revision: 540949
-- rebuild
-
-* Wed Sep 16 2009 Tomasz Pawel Gajc <tpg@mandriva.org> 1.1.1-0.6.6mdv2010.0
-+ Revision: 443343
-- rebuild
-
-  + Thierry Vignaud <tv@mandriva.org>
-    - rebuild
-
-* Sat Nov 08 2008 Tomasz Pawel Gajc <tpg@mandriva.org> 1.1.1-0.6.4mdv2009.1
-+ Revision: 301148
-- finally make it work
-- add buildrequires on cpptasks
-- don't build Cg support
-- add source and spec files
-- Created package structure for jogl.
 
